@@ -10,4 +10,4 @@ O projeto é modular e segue boas práticas para facilitar manutenção e escala
 
 
 ## Cobertura de Testes
-![Cobertura de Testes](assets/coverage.png)
+![Cobertura de Testes](assets/Test_coverage.png)
