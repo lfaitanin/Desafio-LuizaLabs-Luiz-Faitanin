@@ -6,37 +6,27 @@ namespace WebAPI.Infrastructure.Helpers
     public class FileReader : IFileReader
     {
         private readonly IMemoryCache _cache;
-        const string cacheKey = "FileDataCache";
 
         public FileReader(IMemoryCache cache)
         {
             _cache = cache;
         }
-        public async Task<List<string>> ReadAllLinesAsync()
+        public async Task<List<string>> ReadAllLinesAsync(IFormFile file)
         {
+            var cacheKey = file.FileName;
 
             if (_cache.TryGetValue(cacheKey, out List<string> cachedData))
             {
                 return cachedData;
             }
 
-            var data1Path = Path.Combine(Directory.GetCurrentDirectory(), "Infrastructure", "Helpers", "data_1.txt");
-            var data2Path = Path.Combine(Directory.GetCurrentDirectory(), "Infrastructure", "Helpers", "data_2.txt");
+            using var reader = new StreamReader(file.OpenReadStream());
+            var content = (await reader.ReadToEndAsync())
+                        .Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)
+                        .ToList();
 
-            if (!File.Exists(data1Path) || !File.Exists(data2Path))
-            {
-                throw new FileNotFoundException("Arquivos de dados não encontrados.");
-            }
-
-            var data1 = await File.ReadAllLinesAsync(data1Path);
-            var data2 = await File.ReadAllLinesAsync(data2Path);
-
-            var allData = data1.Concat(data2)
-            .Where(line => !string.IsNullOrWhiteSpace(line) && line.Length >= 95)
-            .ToList();
-
-            _cache.Set(cacheKey, allData, TimeSpan.FromHours(24));
-            return allData;
+            _cache.Set(cacheKey, content, TimeSpan.FromHours(24));
+            return content;
         }
     }
 }

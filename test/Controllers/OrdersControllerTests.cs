@@ -30,7 +30,6 @@ namespace Tests.Controllers
         [Fact]
         public async Task GetOrders_ShouldReturnOk_WhenOrdersExist()
         {
-            // Arrange
             var orders = new List<UserOrdersDto>
             {
                 new UserOrdersDto
@@ -75,10 +74,8 @@ namespace Tests.Controllers
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetOrdersQuery>(), It.IsAny<CancellationToken>()))
                          .ReturnsAsync(orders);
 
-            // Act
-            var result = await _controller.GetOrders(null, null, null);
+            var result = await _controller.GetOrders(null, null, null, null);
 
-            // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnedOrders = Assert.IsAssignableFrom<IEnumerable<UserOrdersDto>>(okResult.Value);
             Assert.Equal(orders.Count, returnedOrders.Count());
@@ -87,28 +84,22 @@ namespace Tests.Controllers
         [Fact]
         public async Task GetOrders_ShouldReturnNotFound_WhenNoOrdersExist()
         {
-            // Arrange
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetOrdersQuery>(), It.IsAny<CancellationToken>()))
                          .ReturnsAsync(new List<UserOrdersDto>());
 
-            // Act
-            var result = await _controller.GetOrders(null, null, null);
+            var result = await _controller.GetOrders(null, null, null, null);
 
-            // Assert
             Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
         public async Task GetOrders_ShouldReturnBadRequest_WhenExceptionIsThrown()
         {
-            // Arrange
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetOrdersQuery>(), It.IsAny<CancellationToken>()))
                          .ThrowsAsync(new Exception("Test exception"));
 
-            // Act
-            var result = await _controller.GetOrders(null, null, null);
+            var result = await _controller.GetOrders(null, null, null, null);
 
-            // Assert
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             var problemDetails = Assert.IsAssignableFrom<ProblemDetails>(badRequestResult.Value);
             Assert.Equal("Falha ao retornar os dados do arquivo", problemDetails.Title);

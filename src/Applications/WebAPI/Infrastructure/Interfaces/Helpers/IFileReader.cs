@@ -2,6 +2,6 @@
 {
     public interface IFileReader
     {
-        Task<List<string>> ReadAllLinesAsync();
+        Task<List<string>> ReadAllLinesAsync(IFormFile file);
     }
 }

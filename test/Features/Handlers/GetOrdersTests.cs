@@ -4,6 +4,7 @@ using WebAPI.Features.Orders.Models;
 using Moq;
 using Xunit;
 using WebAPI.Infrastructure.Interfaces.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace WebAPI.Tests.Features.GetOrders
 {
@@ -40,11 +41,9 @@ namespace WebAPI.Tests.Features.GetOrders
         [Fact]
         public async Task GetOrders_FilterByOrderId_ReturnsFilteredOrders()
         {
-            List<string> orders = GetOrders();
-
-            _fileReader.Setup(x => x.ReadAllLinesAsync()).ReturnsAsync(orders);
+            MockFiles(false);
             var handler = new GetOrdersQueryHandler(_fileReader.Object);
-            var query = new GetOrdersQuery(123, null, null);
+            var query = new GetOrdersQuery(null, 123, null, null);
 
             var result = await handler.Handle(query, CancellationToken.None);
 
@@ -56,11 +55,10 @@ namespace WebAPI.Tests.Features.GetOrders
         [Fact]
         public async Task GetOrders_FilterByDateRange_ReturnsFilteredOrders()
         {
-            List<string> orders = GetOrders();
-            _fileReader.Setup(x => x.ReadAllLinesAsync()).ReturnsAsync(orders);
+            MockFiles(false);
 
             var handler = new GetOrdersQueryHandler(_fileReader.Object);
-            var query = new GetOrdersQuery(null, DateTime.Parse("2021-11-25"), DateTime.Parse("2021-12-31"));
+            var query = new GetOrdersQuery(null, null, DateTime.Parse("2021-11-25"), DateTime.Parse("2021-12-31"));
 
             var result = await handler.Handle(query, CancellationToken.None);
 
@@ -71,23 +69,34 @@ namespace WebAPI.Tests.Features.GetOrders
         [Fact]
         public async Task GetOrders_NoData_ReturnsEmptyList()
         {
-            _fileReader.Setup(x => x.ReadAllLinesAsync()).ReturnsAsync(new List<string>());
+            MockFiles(true);
 
             var handler = new GetOrdersQueryHandler(_fileReader.Object);
-            var query = new GetOrdersQuery(null, null, null);
+            var query = new GetOrdersQuery(null, null, null, null);
 
             var result = await handler.Handle(query, CancellationToken.None);
 
             Assert.Empty(result);
         }
-        private static List<string> GetOrders()
-            var fileContent = "";
+
+        private void MockFiles(bool isEmpty)
         {
-            List<string> orders = new List<string>();
-            orders.Add("0000000070                              Palmer Prosacco00000001230000000003     1836.7420210308");
-            orders.Add("0000000075                                  Bobbie Batz00000007980000000002     1578.5720211116");
-            orders.Add("0000000014                                 Clelia Hills00000001460000000001      673.4920211125");
-            return orders;
+            var fileContent = "";
+            if (!isEmpty)
+            {
+                fileContent = "0000000070                              Palmer Prosacco00000001230000000003     1836.7420210308\n" +
+                              "0000000075                                Bobbie Batz00000007980000000002     1578.5720211116\n" +
+                              "0000000014                                 Clelia Hills00000001460000000001      673.4920211125";
+            }
+
+            var fileMock = new Mock<IFormFile>();
+            var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(fileContent));
+            fileMock.Setup(f => f.OpenReadStream()).Returns(stream);
+            fileMock.Setup(f => f.FileName).Returns("test.txt");
+            fileMock.Setup(f => f.Length).Returns(stream.Length);
+
+            _fileReader.Setup(x => x.ReadAllLinesAsync(It.IsAny<IFormFile>()))
+                       .ReturnsAsync(fileContent.Split('\n').ToList());
         }
     }
 }

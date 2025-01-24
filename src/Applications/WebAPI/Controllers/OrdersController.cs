@@ -19,12 +19,12 @@ namespace WebAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetOrders([FromQuery] int? orderId, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        [HttpPost]
+        public async Task<IActionResult> GetOrders(IFormFile file, [FromQuery] int? orderId, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
         {
             try
             {
-                var query = new GetOrdersQuery(orderId, startDate, endDate);
+                var query = new GetOrdersQuery(file, orderId, startDate, endDate);
                 var result = await _mediator.Send(query);
                 if (result.Any())
                     return Ok(result);

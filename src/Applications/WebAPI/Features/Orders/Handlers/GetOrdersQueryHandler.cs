@@ -15,7 +15,7 @@ namespace WebAPI.Features.Orders.Handlers
         }
         public async Task<List<UserOrdersDto>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
-            List<string> allData = await _fileReader.ReadAllLinesAsync();
+            List<string> allData = await _fileReader.ReadAllLinesAsync(request.file);
 
             var orders = new List<UserOrdersDto>();
 

@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="ExcelDataReader" Version="3.7.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" />
@@ -39,6 +43,7 @@
     <Folder Include="Infrastructure\Migrations\" />
     <Folder Include="Infrastructure\Repository\" />
     <Folder Include="Middlewares\" />
+    <Folder Include="assets\" />
   </ItemGroup>
 
 
