@@ -7,3 +7,7 @@
 - **Testes Unitários:** Implementados com xUnit e Moq.
 
 O projeto é modular e segue boas práticas para facilitar manutenção e escalabilidade.
+
+
+## Cobertura de Testes
+![Cobertura de Testes](assets/coverage.png)
