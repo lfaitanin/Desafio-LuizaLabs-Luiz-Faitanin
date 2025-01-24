@@ -81,6 +81,7 @@ namespace WebAPI.Tests.Features.GetOrders
             Assert.Empty(result);
         }
         private static List<string> GetOrders()
+            var fileContent = "";
         {
             List<string> orders = new List<string>();
             orders.Add("0000000070                              Palmer Prosacco00000001230000000003     1836.7420210308");
