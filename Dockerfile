@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copia a solução para restauração de dependências
-COPY ["ChaveDoSaberApi.sln", "./"]
+COPY ["Desafio-Api.sln", "./"]
 
 # Copia o projeto WebAPI e restaura dependências
 COPY ["src/Applications/WebAPI/WebAPI.csproj", "src/Applications/WebAPI/"]
