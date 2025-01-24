@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "src\Applications\WebAPI\WebAPI.csproj", "{ECB84E03-8BE8-461A-851A-3D8FC239639F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "test\Tests.csproj", "{2A68622E-060C-47D6-8E13-23B7EE853616}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "src\Shared\Shared.csproj", "{27D70DBE-61F6-45C8-8AB4-0029CCD7E295}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECB84E03-8BE8-461A-851A-3D8FC239639F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECB84E03-8BE8-461A-851A-3D8FC239639F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECB84E03-8BE8-461A-851A-3D8FC239639F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECB84E03-8BE8-461A-851A-3D8FC239639F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A68622E-060C-47D6-8E13-23B7EE853616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A68622E-060C-47D6-8E13-23B7EE853616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A68622E-060C-47D6-8E13-23B7EE853616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A68622E-060C-47D6-8E13-23B7EE853616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27D70DBE-61F6-45C8-8AB4-0029CCD7E295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27D70DBE-61F6-45C8-8AB4-0029CCD7E295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27D70DBE-61F6-45C8-8AB4-0029CCD7E295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27D70DBE-61F6-45C8-8AB4-0029CCD7E295}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CEBE5E5-FF7D-44AA-AE60-941EA0344233}
+	EndGlobalSection
+EndGlobal
