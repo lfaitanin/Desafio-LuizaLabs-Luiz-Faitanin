@@ -20,10 +20,18 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetOrders(IFormFile file, [FromQuery] int? orderId, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        public async Task<IActionResult> GetOrders(IFormFile file, [FromQuery] int? orderId, DateTime? startDate, DateTime? endDate)
         {
             try
             {
+                if(orderId == null && (startDate == null || endDate == null))
+                {
+                    var problemDetails = ProblemDetailsExtensions
+                                   .CreateProblemDetails(HttpContext, "Obrigatório o uso de Data Início e Data Fim quando não há um OrderId.", 
+                                   $"StartDate: {startDate} - EndDate = {endDate}", StatusCodes.Status404NotFound);
+                    return BadRequest(problemDetails);
+                }
+                
                 var query = new GetOrdersQuery(file, orderId, startDate, endDate);
                 var result = await _mediator.Send(query);
                 if (result.Any())

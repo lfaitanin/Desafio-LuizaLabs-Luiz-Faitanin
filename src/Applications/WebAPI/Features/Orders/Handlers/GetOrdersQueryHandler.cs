@@ -70,6 +70,7 @@ namespace WebAPI.Features.Orders.Handlers
                 orders.ForEach(user => user.Orders = user.Orders.Where(o => o.OrderId == request.OrderId).ToList());
             }
 
+            //Só procuro por data quando existem os 2 dados
             if (request.StartDate.HasValue && request.EndDate.HasValue)
             {
                 orders.ForEach(user => user.Orders = user.Orders
